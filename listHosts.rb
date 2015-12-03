@@ -8,6 +8,11 @@ unless( interface )
 	exit(0)
 end
 
+unless( Process.euid.zero? )
+	puts "Packet sniffing requires root permission."
+	exit(0)
+end
+
 sources = Set.new
 
 capture = PacketFu::Capture.new(:iface => interface, :start => true, :filter => "ip")
